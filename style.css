@@ -385,15 +385,16 @@ button { cursor: pointer; background: none; border: none; font: inherit; }
   padding: var(--space-8);
 }
 .step__num {
-  font-family: var(--font-display); font-size: var(--text-base);
+  font-family: var(--font-display); font-size: 0.8rem;
   font-weight: 800; color: var(--navy);
-  width: 44px; height: 44px;
+  width: 44px; height: 44px; min-width: 44px;
   border-radius: 50%;
   background: var(--cyan);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: var(--space-5);
   flex-shrink: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
+  box-sizing: border-box;
 }
 .step h3 {
   font-size: var(--text-base); font-weight: 700;
