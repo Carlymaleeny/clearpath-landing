@@ -656,3 +656,19 @@ button { cursor: pointer; background: none; border: none; font: inherit; }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ── Feature card icon colour variants ──────────────────────────── */
+.feature-card__icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+.feature-card__icon i { display: flex; }
+.feature-card__icon--blue   { background: #e8f3ff; color: #1d6fd6; }
+.feature-card__icon--violet { background: #f0ebff; color: #7c3aed; }
+.feature-card__icon--teal   { background: #e6f7f5; color: #0d9488; }
+.feature-card__icon--red    { background: #fff0f0; color: #dc2626; }
+.feature-card__icon--amber  { background: #fff8e6; color: #d97706; }
+.feature-card__icon--navy   { background: #e8eff6; color: #003857; }
