@@ -247,11 +247,7 @@ button { cursor: pointer; background: none; border: none; font: inherit; }
 }
 .hero__screen--main { position: relative; }
 .hero__screen--main img { width: 100%; display: block; }
-.hero__screen--float {
-  position: absolute; bottom: -32px; left: -40px;
-  width: 48%; box-shadow: var(--shadow-xl);
-  border: 2px solid rgba(107,189,230,0.3);
-}
+
 .hero__wave {
   position: relative; margin-top: var(--space-10); line-height: 0;
 }
@@ -389,9 +385,15 @@ button { cursor: pointer; background: none; border: none; font: inherit; }
   padding: var(--space-8);
 }
 .step__num {
-  font-family: var(--font-display); font-size: var(--text-2xl);
-  font-weight: 800; color: var(--cyan); opacity: 0.35;
-  margin-bottom: var(--space-4);
+  font-family: var(--font-display); font-size: var(--text-base);
+  font-weight: 800; color: var(--navy);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: var(--space-5);
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
 }
 .step h3 {
   font-size: var(--text-base); font-weight: 700;
