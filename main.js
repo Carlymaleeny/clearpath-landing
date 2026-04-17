@@ -27,29 +27,64 @@
     });
   }
 
-  // ── Platform tabs ───────────────────────────────────────────────
-  const tabs = document.querySelectorAll('.platform__tab');
+  // ── Platform tabs + mobile swipe ───────────────────────────────
+  const tabs   = document.querySelectorAll('.platform__tab');
   const panels = document.querySelectorAll('.platform__panel');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.target;
-      tabs.forEach(t => {
-        t.classList.remove('platform__tab--active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      panels.forEach(p => {
-        p.classList.remove('platform__panel--active');
-        p.hidden = true;
-      });
-      tab.classList.add('platform__tab--active');
-      tab.setAttribute('aria-selected', 'true');
-      const panel = document.getElementById(target);
-      if (panel) {
-        panel.classList.add('platform__panel--active');
-        panel.hidden = false;
-      }
+  const tabList = document.querySelectorAll('.platform__tab');
+  let currentIndex = 0;
+
+  function activateTab(index) {
+    currentIndex = index;
+    tabs.forEach((t, i) => {
+      t.classList.toggle('platform__tab--active', i === index);
+      t.setAttribute('aria-selected', i === index ? 'true' : 'false');
     });
+    panels.forEach((p, i) => {
+      p.classList.toggle('platform__panel--active', i === index);
+      p.hidden = i !== index;
+    });
+    // Update dots
+    document.querySelectorAll('.platform__dot').forEach((d, i) => {
+      d.classList.toggle('platform__dot--active', i === index);
+    });
+    // Scroll active tab into view on mobile
+    tabs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activateTab(i));
   });
+
+  // Inject swipe dots below panels on mobile
+  const platformSection = document.querySelector('.platform__panels');
+  if (platformSection) {
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'platform__dots';
+    tabs.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'platform__dot' + (i === 0 ? ' platform__dot--active' : '');
+      dot.setAttribute('aria-label', `View slide ${i + 1}`);
+      dot.addEventListener('click', () => activateTab(i));
+      dotsWrap.appendChild(dot);
+    });
+    platformSection.after(dotsWrap);
+  }
+
+  // Touch swipe
+  const panelWrap = document.querySelector('.platform__panels');
+  if (panelWrap) {
+    let startX = 0;
+    panelWrap.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    panelWrap.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentIndex < tabs.length - 1) activateTab(currentIndex + 1);
+        if (diff < 0 && currentIndex > 0) activateTab(currentIndex - 1);
+      }
+    }, { passive: true });
+  }
 
   // ── Scroll reveal ───────────────────────────────────────────────
   const revealEls = document.querySelectorAll(
